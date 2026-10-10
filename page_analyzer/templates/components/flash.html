@@ -1,0 +1,12 @@
+{% set flash_classes = {
+  'success': 'border-green-200 bg-green-50 text-green-800',
+  'info': 'border-blue-200 bg-blue-50 text-blue-800',
+  'danger': 'border-red-200 bg-red-50 text-red-800',
+} %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div role="alert" class="border-b px-4 py-3 {{ flash_classes[category] }}">
+      <p class="mx-auto max-w-6xl">{{ message }}</p>
+    </div>
+  {% endfor %}
+{% endwith %}

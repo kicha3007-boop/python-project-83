@@ -1,0 +1,7 @@
+{% macro header_cell(title) %}
+  <th class="px-4 py-2 font-semibold">{{ title }}</th>
+{% endmacro %}
+
+{% macro cell() %}
+  <td class="px-4 py-2">{{ caller() }}</td>
+{% endmacro %}

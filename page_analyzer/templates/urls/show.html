@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% from 'components/table.html' import header_cell, cell %}
+
+{% block content %}
+  <h1 class="mb-6 text-3xl font-bold">Сайт: {{ url.name }}</h1>
+  <div class="overflow-x-auto">
+    <table data-test="url" class="w-full border-collapse text-left">
+      <tbody>
+        <tr class="border-b border-gray-100">
+          <td class="w-48 px-4 py-2 font-semibold">ID</td>
+          {% call cell() %}{{ url.id }}{% endcall %}
+        </tr>
+        <tr class="border-b border-gray-100">
+          <td class="px-4 py-2 font-semibold">Имя</td>
+          {% call cell() %}{{ url.name }}{% endcall %}
+        </tr>
+        <tr class="border-b border-gray-100">
+          <td class="px-4 py-2 font-semibold">Дата создания</td>
+          {% call cell() %}{{ url.created_at | format_date }}{% endcall %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Проверки</h2>
+  <form method="post" action="{{ url_for('url_checks_create', id=url.id) }}">
+    <input type="submit" value="Запустить проверку"
+           class="cursor-pointer rounded bg-blue-600 px-6 py-2 font-medium text-white hover:bg-blue-700">
+  </form>
+
+  <div class="mt-6 overflow-x-auto">
+    <table data-test="checks" class="w-full border-collapse text-left">
+      <thead>
+        <tr class="border-b border-gray-300">
+          {{ header_cell('ID') }}
+          {{ header_cell('Код ответа') }}
+          {{ header_cell('h1') }}
+          {{ header_cell('title') }}
+          {{ header_cell('description') }}
+          {{ header_cell('Дата создания') }}
+        </tr>
+      </thead>
+      <tbody>
+        {% for check in checks %}
+          <tr class="border-b border-gray-100 odd:bg-gray-50">
+            {% call cell() %}{{ check.id }}{% endcall %}
+            {% call cell() %}{{ check.status_code }}{% endcall %}
+            {% call cell() %}{{ check.h1 | truncate_text }}{% endcall %}
+            {% call cell() %}{{ check.title | truncate_text }}{% endcall %}
+            {% call cell() %}{{ check.description | truncate_text }}{% endcall %}
+            {% call cell() %}{{ check.created_at | format_date }}{% endcall %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

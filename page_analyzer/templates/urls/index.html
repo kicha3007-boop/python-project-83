@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% from 'components/table.html' import header_cell, cell %}
+
+{% block content %}
+  <h1 class="mb-6 text-3xl font-bold">Сайты</h1>
+  <div class="overflow-x-auto">
+    <table data-test="urls" class="w-full border-collapse text-left">
+      <thead>
+        <tr class="border-b border-gray-300">
+          {{ header_cell('ID') }}
+          {{ header_cell('Имя') }}
+          {{ header_cell('Последняя проверка') }}
+          {{ header_cell('Код ответа') }}
+        </tr>
+      </thead>
+      <tbody>
+        {% for url in urls %}
+          <tr class="border-b border-gray-100 odd:bg-gray-50">
+            {% call cell() %}{{ url.id }}{% endcall %}
+            {% call cell() %}
+              <a class="text-blue-600 hover:underline" href="{{ url_for('urls_show', id=url.id) }}">{{ url.name }}</a>
+            {% endcall %}
+            {% call cell() %}{{ url.last_check_at | format_date }}{% endcall %}
+            {% call cell() %}{{ url.status_code or '' }}{% endcall %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

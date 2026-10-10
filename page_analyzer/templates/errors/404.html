@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1 class="mb-4 text-3xl font-bold">Страница не найдена</h1>
+  <p class="mb-6 text-gray-600">Такой страницы нет. Проверьте адрес или вернитесь на главную.</p>
+  <a class="text-blue-600 hover:underline" href="{{ url_for('index') }}">На главную</a>
+{% endblock %}
